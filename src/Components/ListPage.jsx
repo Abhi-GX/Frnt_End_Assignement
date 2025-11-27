@@ -8,7 +8,7 @@ const ListPage = ({focus}) => {
     try {
       const raw = localStorage.getItem('tasks');
       const parsed = raw ? JSON.parse(raw) : null;
-      return parsed && Array.isArray(parsed) ? parsed : [{ id: 1, text: 'Sample Task', done: false }];
+      return parsed && Array.isArray(parsed) ? parsed : [{ id: 1, text: 'Sample Task',scheduled: Date.now(), done: false }];
     
     } catch (e) {
       return [{ id: 1, text: 'Sample Task', done: false }];
@@ -18,7 +18,7 @@ const ListPage = ({focus}) => {
   const [filter, setFilter] = useState('all'); 
   const [notes, setNotes] = useState(() => {
     try {
-      return localStorage.getItem('notes') || '';
+      return localStorage.getItem('notes') || 'Building the ideas that are never meant to be built.';
     } catch (e) {
       return '';
     }
