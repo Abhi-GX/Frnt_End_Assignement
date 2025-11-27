@@ -1,3 +1,7 @@
+
+
+/* Note: lot of UI part like CSS and styles is generated using AI , just made some changes for the alignment */
+
 .container {
   max-width: 900px;
   margin: 0 auto;
@@ -51,14 +55,14 @@
   width: 100%;
   border-collapse: collapse;
   display: table;
-  table-layout: fixed; /* use fixed layout with colgroup widths for consistent alignment */
+  table-layout: fixed; 
 }
 .task-table th, .task-table td {
   padding: 0.75rem;
   border-bottom: 1px solid #e5e7eb;
   text-align: left;
   vertical-align: middle;
-  overflow-wrap: anywhere; /* allow long text to wrap */
+  overflow-wrap: anywhere; 
   white-space: normal;
 }
 .task-table th { font-weight: 600; }
@@ -83,7 +87,7 @@
 .btn-done { padding-bottom: 18px; background: transparent; color: #059669; border: 1px solid transparent; }
 .btn-delete { padding-bottom: 18px; background: transparent; color: #dc2626; border: 1px solid transparent; }
 
-/* Keep category column from expanding into the actions column */
+
 .task-table td:nth-child(4) {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -101,7 +105,7 @@
 .lp-notes { margin-top:1rem; }
 .lp-notes textarea { width:100%; padding:0.75rem; border-radius:8px; border:1px solid #e5e7eb; }
 
-/* Responsive: switch to card list on narrow screens */
+
 @media (max-width: 768px) {
   .task-table { display: none; }
   .task-list { display: block; }
@@ -111,7 +115,7 @@
   .lp-add { padding: 0.5rem; }
 }
 
-/* Modal styles for Add Task details */
+/* Modal card */
 .modal {
   position: fixed;
   inset: 0;

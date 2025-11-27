@@ -10,6 +10,13 @@ import Navbar from "./Components/Navbar.jsx";
 import React from 'react';
 function App() {
   const [focusMode, setFocusMode] = useState(false);
+  /* Note: lot of UI part like CSS and styles is generated using AI ,
+   just made some changes for the alignment ,
+   Concentrated more on React scripts*/
+
+
+  //  navigate to todolist from the focus Mode in Navbar
+
   return (
     <>
         <Router>

@@ -1,13 +1,16 @@
+/* Note: lot of UI part like CSS and styles is generated using AI , just made some changes for the alignment */
+
+
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 60;
-  background-color: #2563eb; /* Tailwind bg-blue-600 */
+  background-color: #2563eb; 
   box-shadow: 0 4px 6px rgba(0,0,0,0.08);
   display: flex;
-  justify-content: center; /* center inner container */
+  justify-content: center; 
 }
 
 .navbar-inner {
@@ -21,7 +24,7 @@
 }
 
 .navbar-brand {
-  font-size: 1.125rem; /* text-xl */
+  font-size: 1.125rem; 
   font-weight: 600;
 }
 
@@ -30,13 +33,13 @@
   background: #ffffff;
   color: #2563eb;
   padding: 0.25rem 1rem;
-  border-radius: 9999px; /* rounded-full */
-  font-size: 0.875rem; /* text-sm */
+  border-radius: 9999px; 
+  font-size: 0.875rem;
   font-weight: 500;
   transition: background-color 150ms ease, transform 100ms ease;
 }
 .navbar-button:hover {
-  background: #f3f4f6; /* gray-100 */
+  background: #f3f4f6;
 }
 
 @media (prefers-reduced-motion: no-preference) {
