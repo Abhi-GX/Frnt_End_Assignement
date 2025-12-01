@@ -8,6 +8,7 @@ import About from "./Components/About.jsx";
 import ListPage from "./Components/ListPage.jsx";
 import Navbar from "./Components/Navbar.jsx";
 import React from 'react';
+import { ThemeProvider } from './contexts/ThemeContext.jsx';
 function App() {
   const [focusMode, setFocusMode] = useState(false);
   /* Note: lot of UI part like CSS and styles is generated using AI ,
@@ -20,12 +21,14 @@ function App() {
   return (
     <>
         <Router>
+          <ThemeProvider>
           <Navbar focusMode={focusMode} onFocusModeToggle={() => setFocusMode(!focusMode)} />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/todolist" element={<ListPage focus={focusMode} />} />
             </Routes>
+          </ThemeProvider>
         </Router>
     </>
   )

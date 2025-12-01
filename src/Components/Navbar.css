@@ -1,5 +1,4 @@
-/* Note: lot of UI part like CSS and styles is generated using AI , just made some changes for the alignment */
-
+/* Navbar styles with theme-aware variables */
 
 .navbar {
   position: fixed;
@@ -7,10 +6,10 @@
   left: 0;
   right: 0;
   z-index: 60;
-  background-color: #2563eb; 
+  background-color: var(--nav-bg);
   box-shadow: 0 4px 6px rgba(0,0,0,0.08);
   display: flex;
-  justify-content: center; 
+  justify-content: center;
 }
 
 .navbar-inner {
@@ -19,31 +18,41 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 1.5rem;
-  color: #ffffff;
+  padding: 0.6rem 1rem;
+  color: var(--button-text);
 }
 
 .navbar-brand {
-  font-size: 1.125rem; 
+  font-size: 1.125rem;
   font-weight: 600;
+  color: var(--button-text);
 }
 
-.navbar-button {
+/* brand uses primary accent so it stands out */
+.navbar-brand { color: var(--primary); }
+
+.navbar-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.navbar-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--button-bg);
+  color: var(--primary);
+  border: 1px solid transparent;
   cursor: pointer;
-  background: #ffffff;
-  color: #2563eb;
-  padding: 0.25rem 1rem;
-  border-radius: 9999px; 
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: background-color 150ms ease, transform 100ms ease;
 }
-.navbar-button:hover {
-  background: #f3f4f6;
+.navbar-icon {
+  transition: background-color 180ms ease, transform 120ms ease, box-shadow 150ms ease;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .navbar-button:active {
-    transform: translateY(1px);
-  }
-}
+.navbar-icon:hover { filter: brightness(0.95); box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
+.navbar-icon:active { transform: translateY(1px); }
+.navbar-icon:focus { outline: 3px solid rgba(37,99,235,0.14); }
+.navbar-icon svg { color: currentColor; }

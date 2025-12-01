@@ -5,6 +5,8 @@
   /* add extra top padding to avoid content being hidden under the fixed navbar */
   padding-top: calc(2rem + 3.5rem);
   text-align: center;
+  color: var(--text);
+  background: var(--bg);
 }
 
 .logo {

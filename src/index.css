@@ -7,14 +7,38 @@
   line-height: 1.5;
   font-weight: 400;
 
+  /* Color variables (light default) */
+  --bg: #ffffff;
+  --text: #1f2937; /* slate-800 */
+  --muted: #6b7280; /* slate-500 */
+  --primary: #2563eb;
+  --nav-bg: #2563eb;
+  --card-bg: #ffffff;
+  --border: #e5e7eb;
+  --button-bg: #f3f4f6;
+  --button-text: #111827;
+
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--text);
+  background-color: var(--bg);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark theme overrides applied when ThemeContext sets data-theme="dark" on <html> */
+html[data-theme='dark'] {
+  --bg: #0f172a; /* slate-900 */
+  --text: #e6eef8; /* light text */
+  --muted: #94a3b8; /* slate-400 */
+  --primary: #2563eb;
+  --nav-bg: #0b1220;
+  --card-bg: #071029;
+  --border: #1f2937;
+  --button-bg: #0b1220;
+  --button-text: #e6eef8;
 }
 
 a {
