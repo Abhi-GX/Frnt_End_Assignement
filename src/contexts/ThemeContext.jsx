@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
-const ThemeContext=React.createContext('light');
+const ThemeContext=React.createContext({theme:'light', toggleTheme: () => {}});
 const ThemeProvider=({children})=>{
   const [theme,setTheme]=React.useState(() => {
     try {

@@ -8,6 +8,14 @@ import { SunIcon, MoonIcon, SparklesIcon } from '@heroicons/react/24/outline';
 const Navbar = ({ onFocusModeToggle, focusMode }) => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = React.useContext(ThemeContext);
+  const OnFocusToggle=()=>{
+    onFocusModeToggle();
+    if(!focusMode){
+      navigate('/todolist');
+    }else{
+      navigate('/');
+    }
+  }
 
   return (
     <nav className="navbar">
@@ -20,8 +28,7 @@ const Navbar = ({ onFocusModeToggle, focusMode }) => {
               shape="circle"
               icon={<SparklesIcon className="h-5 w-5" />}
               onClick={() => { 
-                navigate('/todolist'); 
-                onFocusModeToggle(); 
+                OnFocusToggle(); 
               }}
               aria-pressed={!!focusMode}
             />

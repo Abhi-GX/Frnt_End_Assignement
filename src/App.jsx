@@ -8,9 +8,12 @@ import About from "./Components/About.jsx";
 import ListPage from "./Components/ListPage.jsx";
 import Navbar from "./Components/Navbar.jsx";
 import React from 'react';
-import { ThemeProvider } from './contexts/ThemeContext.jsx';
+import { ThemeProvider,ThemeContext } from './contexts/ThemeContext.jsx';
 function App() {
   const [focusMode, setFocusMode] = useState(false);
+  const {theme} = React.useContext(ThemeContext);
+  console.log(focusMode);
+  console.log(theme);
   /* Note: lot of UI part like CSS and styles is generated using AI ,
    just made some changes for the alignment ,
    Concentrated more on React scripts*/

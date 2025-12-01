@@ -3,9 +3,8 @@ import './ListPage.css';
 import { ThemeContext } from '../contexts/ThemeContext.jsx';
 
 const ListPage = ({focus}) => {
-  console.log(focus);
+  
   const {theme} = React.useContext(ThemeContext);
-  console.log(theme);
   // states
   const [tasks, setTasks] = useState(() => {
     try {
