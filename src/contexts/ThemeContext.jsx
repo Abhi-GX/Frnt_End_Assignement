@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useContext } from 'react';
 const ThemeContext=React.createContext({theme:'light', toggleTheme: () => {}});
 const ThemeProvider=({children})=>{
@@ -21,6 +21,8 @@ const ThemeProvider=({children})=>{
     });
   }
 
+  const value=useMemo(() => ({theme, toggleTheme}), [theme]);
+
   React.useEffect(() => {
     try {
       // apply current theme as a data attribute on the root element
@@ -30,7 +32,7 @@ const ThemeProvider=({children})=>{
     }
   }, [theme]);
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );
