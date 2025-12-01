@@ -150,6 +150,8 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 1.5rem;
+  background: var(--bg);
+  color: var(--text);
 }
 
 .lp-title {

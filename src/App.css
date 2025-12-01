@@ -6,7 +6,7 @@
   padding-top: calc(2rem + 3.5rem);
   text-align: center;
   color: var(--text);
-  background: var(--bg);
+  background: var(--bbg);
 }
 
 .logo {

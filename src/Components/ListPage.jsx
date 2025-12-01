@@ -76,6 +76,7 @@ const ListPage = ({focus}) => {
   };
 
   const deleteTask = (id) => {
+    window.confirm('Are you sure you want to delete this task?') &&
     setTasks(prev => prev.filter(t => t.id !== id));
   };
 

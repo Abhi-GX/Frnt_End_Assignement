@@ -41,6 +41,15 @@ npx tailwindcss init -p
 
 - After enabling Tailwind, you can revert component styles to Tailwind utilities if desired.
 
+**Icons**
+- This project now uses Heroicons for the navbar icons. Install them locally with:
+
+```
+npm install @heroicons/react
+```
+
+After installing, the icons will render as standard React components used by `src/Components/Navbar.jsx`.
+
 **Files of interest**
 - `src/Components/ListPage.jsx` — main todo UI and logic
 - `src/Components/ListPage.css` — list/table/card styles and responsive rules

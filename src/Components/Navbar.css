@@ -25,11 +25,12 @@
 .navbar-brand {
   font-size: 1.125rem;
   font-weight: 600;
-  color: var(--button-text);
+  color: var(--nav-foreground);
 }
 
 /* brand uses primary accent so it stands out */
-.navbar-brand { color: var(--primary); }
+/* Remove previous primary color that made it invisible on light mode */
+/* .navbar-brand { color: var(--primary); } */
 
 .navbar-actions {
   display: flex;
@@ -56,3 +57,43 @@
 .navbar-icon:active { transform: translateY(1px); }
 .navbar-icon:focus { outline: 3px solid rgba(37,99,235,0.14); }
 .navbar-icon svg { color: currentColor; }
+/* Ensure icons have a visible size when Tailwind is not available */
+.navbar-icon .icon, .navbar-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* Ant Design buttons inside the navbar: override global button styles so icons are visible */
+.navbar-actions .ant-btn {
+  background: var(--button-bg) !important;
+  color: var(--button-text) !important;
+  border: 1px solid transparent !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  border-radius: 10px !important;
+}
+.navbar-actions .ant-btn:hover {
+  background: color-mix(in srgb, var(--button-bg) 85%, #000 15%) !important;
+}
+.navbar-actions .ant-btn .ant-btn-icon,
+.navbar-actions .ant-btn span.ant-btn-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.navbar-actions .ant-btn .ant-btn-icon svg,
+.navbar-actions .ant-btn-icon svg {
+  width: 18px !important;
+  height: 18px !important;
+  color: currentColor !important;
+}
+
+/* for circle/text variant ensure icon-only buttons look right */
+.navbar-actions .ant-btn.ant-btn-circle {
+  padding: 6px !important;
+}

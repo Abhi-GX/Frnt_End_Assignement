@@ -8,7 +8,9 @@
   font-weight: 400;
 
   /* Color variables (light default) */
-  --bg: #ffffff;
+  /* page background slightly off-white so cards (white) stand out */
+  --bg: white;
+  --bbg: #f6f7f8;
   --text: #1f2937; /* slate-800 */
   --muted: #6b7280; /* slate-500 */
   --primary: #2563eb;
@@ -17,6 +19,7 @@
   --border: #e5e7eb;
   --button-bg: #f3f4f6;
   --button-text: #111827;
+  --nav-foreground: #ffffff;
 
   color-scheme: light dark;
   color: var(--text);
@@ -30,15 +33,18 @@
 
 /* Dark theme overrides applied when ThemeContext sets data-theme="dark" on <html> */
 html[data-theme='dark'] {
-  --bg: #0f172a; /* slate-900 */
+  /* dark theme: make page bg darker than cards so cards appear elevated */
+  --bbg: #041226;
+  --bg:#2d2e30; /* darkest page background */
   --text: #e6eef8; /* light text */
   --muted: #94a3b8; /* slate-400 */
   --primary: #2563eb;
-  --nav-bg: #0b1220;
-  --card-bg: #071029;
-  --border: #1f2937;
-  --button-bg: #0b1220;
+  --nav-bg: #071029;
+  --card-bg: #0b1624; /* slightly lighter than page bg */
+  --border: #0f1724;
+  --button-bg: #071029;
   --button-text: #e6eef8;
+  --nav-foreground: var(--button-text);
 }
 
 a {
@@ -56,6 +62,11 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+/* ensure page background follows theme variables */
+body {
+  background: var(--bbg);
+  color: var(--text);
 }
 
 h1 {
