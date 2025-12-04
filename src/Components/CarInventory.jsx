@@ -6,9 +6,17 @@ const CarInventory = () => {
     const [suggestions, setSuggestions] = useState(['bmw', 'audi', 'ford', 'toyota', 'honda']);
     const [searchQuery, setSearchQuery] = useState('bmw');
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(20);
+    const [totalPages, setTotalPages] = useState(null);
+    const [totalElements, setTotalElements] = useState(null);
     const debounceRef = useRef(null);
-    async function getCars(query) {
+    async function getCars(query, pageArg = null, sizeArg = null) {
        
+        const p = typeof pageArg === 'number' ? pageArg : page;
+        const s = typeof sizeArg === 'number' ? sizeArg : size;
+        const start = p * s;
+
         const body = {
             query: [query],
             filter: {},
@@ -18,9 +26,9 @@ const CarInventory = () => {
                 'auction_date_type desc',
                 'auction_date_utc asc',
             ],
-            page: 0,
-            size: 20,
-            start: 0,
+            page: p,
+            size: s,
+            start: start,
             watchListOnly: false,
             freeFormSearch: true,
             hideImages: false,
@@ -53,10 +61,21 @@ const CarInventory = () => {
 
             
             console.log('Search response:', response);
-            const data = response.data || [];
-            const items = data.results || data.data || data.rows || data || [];
-            console.log('Cars data:', items.results.content);
-            setCars(items.results.content || []);
+            const resp = response.data || {};
+
+            // Try to extract paginated list content from common shapes
+            const content = resp?.results?.content ?? resp?.data?.results?.content ?? resp?.data ?? resp?.rows ?? resp?.results ?? resp;
+            const list = Array.isArray(content) ? content : (Array.isArray(content?.content) ? content.content : []);
+            setCars(list);
+
+            // Update pagination info when available
+            const tp = resp?.results?.totalPages ?? resp?.data?.totalPages ?? resp?.totalPages;
+            const te = resp?.results?.totalElements ?? resp?.data?.totalElements ?? resp?.totalElements ?? resp?.totalCount ?? null;
+            setTotalPages(typeof tp === 'number' ? tp : (tp ? Number(tp) : null));
+            setTotalElements(typeof te === 'number' ? te : (te ? Number(te) : null));
+            // sync page/size with what we requested
+            setPage(p);
+            setSize(s);
         } catch (e) {
             console.error('getCars error:', e.response?.data || e.message || e);
         }
@@ -119,8 +138,23 @@ const CarInventory = () => {
     };
 
     const handleSearch = () => {
-        getCars(searchQuery);
+        // reset to first page when performing a new search
+        setPage(0);
+        getCars(searchQuery, 0, size);
     }
+    const handlePrev = () => {
+        if (page <= 0) return;
+        const nextPage = page - 1;
+        setPage(nextPage);
+        getCars(searchQuery, nextPage, size);
+    };
+    const handleNext = () => {
+        // if totalPages known, don't go beyond it
+        if (totalPages != null && page >= totalPages - 1) return;
+        const nextPage = page + 1;
+        setPage(nextPage);
+        getCars(searchQuery, nextPage, size);
+    };
     const handleSuggestionClick = (s) => {
         // suggestion might be a string like 'Audi Q5' or an object; handle both
         const value = typeof s === 'string' ? s.trim() : (s.displayName || s.text || JSON.stringify(s));
@@ -154,6 +188,8 @@ const CarInventory = () => {
                         fontSize: '14px'
                     }}>Search and explore thousands of vehicles</p>
                 </div>
+
+                
 
                 {/* Search Section */}
                 <div style={{
@@ -540,6 +576,51 @@ const CarInventory = () => {
                             color: 'var(--text-primary, #2d3748)'
                         }}>No vehicles found</h3>
                         <p style={{ margin: 0, fontSize: '14px' }}>Try searching for a different make or model</p>
+                    </div>
+                )}
+
+                {/* Pagination Controls */}
+                {cars.length > 0 && (
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginTop: '20px',
+                        gap: '12px'
+                    }}>
+                        <button
+                            onClick={handlePrev}
+                            disabled={page <= 0}
+                            style={{
+                                padding: '10px 16px',
+                                borderRadius: '8px',
+                                border: '1px solid var(--border-color, #e2e8f0)',
+                                background: page <= 0 ? 'var(--bg-disabled, #f7fafc)' : 'var(--bg-card, #ffffff)',
+                                color: page <= 0 ? 'var(--text-muted, #a0aec0)' : 'var(--text-primary, #1a202c)',
+                                cursor: page <= 0 ? 'not-allowed' : 'pointer'
+                            }}
+                        >
+                            Prev
+                        </button>
+
+                        <div style={{ flex: 1, textAlign: 'center', color: 'var(--text-secondary, #718096)', fontSize: '13px' }}>
+                            Page {page + 1}{totalPages ? ` of ${totalPages}` : ''}{totalElements ? ` — ${totalElements} results` : ''}
+                        </div>
+
+                        <button
+                            onClick={handleNext}
+                            disabled={totalPages != null ? page >= (totalPages - 1) : (cars.length < size)}
+                            style={{
+                                padding: '10px 16px',
+                                borderRadius: '8px',
+                                border: '1px solid var(--border-color, #e2e8f0)',
+                                background: (totalPages != null ? page >= (totalPages - 1) : (cars.length < size)) ? 'var(--bg-disabled, #f7fafc)' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                color: (totalPages != null ? page >= (totalPages - 1) : (cars.length < size)) ? 'var(--text-muted, #a0aec0)' : '#fff',
+                                cursor: (totalPages != null ? page >= (totalPages - 1) : (cars.length < size)) ? 'not-allowed' : 'pointer'
+                            }}
+                        >
+                            Next
+                        </button>
                     </div>
                 )}
             </div>
