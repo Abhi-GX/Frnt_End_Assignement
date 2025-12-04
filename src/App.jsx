@@ -9,6 +9,8 @@ import ListPage from "./Components/ListPage.jsx";
 import Navbar from "./Components/Navbar.jsx";
 import React from 'react';
 import { ThemeProvider,ThemeContext } from './contexts/ThemeContext.jsx';
+import axios from 'axios';
+import CarInventory from './Components/CarInventory.jsx';
 function App() {
   const [focusMode, setFocusMode] = useState(false);
   const {theme} = React.useContext(ThemeContext);
@@ -30,6 +32,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/todolist" element={<ListPage focus={focusMode} />} />
+                <Route path="/cars" element={<CarInventory />} />
             </Routes>
           </ThemeProvider>
         </Router>

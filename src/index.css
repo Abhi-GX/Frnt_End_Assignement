@@ -21,6 +21,19 @@
   --button-text: #111827;
   --nav-foreground: #ffffff;
 
+  /* CarInventory specific variables */
+  --bg-primary: #f5f7fa;
+  --bg-card: #ffffff;
+  --bg-input: #f7fafc;
+  --bg-input-focus: #edf2f7;
+  --bg-hover: #edf2f7;
+  --bg-details: #f7fafc;
+  --bg-image: #f0f4f8;
+  --text-primary: #1a202c;
+  --text-secondary: #718096;
+  --text-muted: #a0aec0;
+  --border-color: #e2e8f0;
+
   color-scheme: light dark;
   color: var(--text);
   background-color: var(--bg);
@@ -45,6 +58,19 @@ html[data-theme='dark'] {
   --button-bg: #071029;
   --button-text: #e6eef8;
   --nav-foreground: var(--button-text);
+
+  /* CarInventory dark theme variables */
+  --bg-primary: #0a0e1a;
+  --bg-card: #1a1f2e;
+  --bg-input: #0f1724;
+  --bg-input-focus: #1a2332;
+  --bg-hover: #252d3d;
+  --bg-details: #151b28;
+  --bg-image: #0d1218;
+  --text-primary: #e6eef8;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border-color: #1e293b;
 }
 
 a {
