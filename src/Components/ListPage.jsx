@@ -16,8 +16,9 @@ const ListPage = ({focus}) => {
       return [{ id: 1, text: 'Sample Task', done: false }];
     }
   });
+
   const [input, setInput] = useState('');
-  const [filter, setFilter] = useState('all'); 
+  const [filter, setFilter] = useState('all');
   const [notes, setNotes] = useState(() => {
     try {
       return localStorage.getItem('notes') || 'Building the ideas that are never meant to be built.';
@@ -28,8 +29,6 @@ const ListPage = ({focus}) => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [modalScheduled, setModalScheduled] = useState('');
   const [modalCategory, setModalCategory] = useState('personal');
-
-  
 
   const categoryIcon = (cat) => {
     const map = {
@@ -47,7 +46,6 @@ const ListPage = ({focus}) => {
   const addTask = () => {
     const text = input.trim();
     if (!text) return;
-    
     setModalScheduled('');
     setModalCategory('personal');
     setShowAddModal(true);

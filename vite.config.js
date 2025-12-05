@@ -79,7 +79,7 @@ export default defineConfig({
             } catch (e) {}
           });
 
-          proxy.on('proxyRes', (proxyRes, req, res) => {
+          proxy.on('proxyRes', (proxyRes, req, res) => {   
             try {
               console.log(`[proxyRes] ${req.url} -> ${proxyRes.statusCode}`);
               const ct = proxyRes.headers && proxyRes.headers['content-type'];
