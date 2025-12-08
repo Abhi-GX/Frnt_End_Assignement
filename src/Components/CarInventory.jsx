@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import axios from 'axios';
 import qs from 'qs';
 const CarInventory = () => {
@@ -11,6 +11,9 @@ const CarInventory = () => {
     const [totalPages, setTotalPages] = useState(null);
     const [totalElements, setTotalElements] = useState(null);
     const debounceRef = useRef(null);
+    // Sorting state: category (field) and order
+    const [sortField, setSortField] = useState('currentBid');
+    const [sortOrder, setSortOrder] = useState('desc');
     async function getCars(query, pageArg = null, sizeArg = null) {
        
         const p = typeof pageArg === 'number' ? pageArg : page;
@@ -162,6 +165,28 @@ const CarInventory = () => {
         setShowSuggestions(false);
         getCars(value);
     };
+
+    const sortedCars = useMemo(() => {
+        if (!cars || cars.length === 0) return [];
+        const arr = [...cars];
+        const getter = (lot) => {
+            switch (sortField) {
+                case 'odometer': return Number(lot.orr ?? lot.odometer ?? 0) || 0;
+                case 'buyNow': return Number(lot.bnp ?? lot.buyTodayBid ?? 0) || 0;
+                case 'year': return Number(lot.lcy ?? lot.year ?? 0) || 0;
+                case 'currentBid':
+                default: return Number(lot.hb ?? lot.currentBid ?? lot.obc ?? 0) || 0;
+            }
+        };
+        arr.sort((a, b) => {
+            const av = getter(a);
+            const bv = getter(b);
+            if (av === bv) return 0;
+            const cmp = av < bv ? -1 : 1;
+            return sortOrder === 'asc' ? cmp : -cmp;
+        });
+        return arr;
+    }, [cars, sortField, sortOrder]);
     return (
         <div style={{
             minHeight: '100vh',
@@ -291,15 +316,42 @@ const CarInventory = () => {
                     )}
                 </div>
 
+                {/* Sort Controls */}
+                <div style={{
+                    display: 'flex',
+                    gap: '12px',
+                    alignItems: 'center',
+                    margin: '8px 24px 24px 24px',
+                    flexWrap: 'wrap'
+                }}>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        <label style={{ fontSize: 12, color: 'var(--text-secondary, #718096)' }}>Category</label>
+                        <select value={sortField} onChange={e => setSortField(e.target.value)} style={{ padding: '6px 8px', borderRadius: 6, border: '1px solid var(--border-color, #e2e8f0)' }}>
+                            <option value="currentBid">Current Bid</option>
+                            <option value="buyNow">Buy Now</option>
+                            <option value="odometer">Odometer</option>
+                            <option value="year">Year</option>
+                        </select>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        <label style={{ fontSize: 12, color: 'var(--text-secondary, #718096)' }}>Order</label>
+                        <select value={sortOrder} onChange={e => setSortOrder(e.target.value)} style={{ padding: '6px 8px', borderRadius: 6, border: '1px solid var(--border-color, #e2e8f0)' }}>
+                            <option value="desc">Descending</option>
+                            <option value="asc">Ascending</option>
+                        </select>
+                    </div>
+                </div>
+
                 {/* Results Count */}
-                {cars.length > 0 && (
+                {sortedCars.length > 0 && (
                     <div style={{
                         marginBottom: '20px',
                         fontSize: '14px',
                         color: 'var(--text-secondary, #718096)',
                         fontWeight: '500'
                     }}>
-                        Found {cars.length} {cars.length === 1 ? 'vehicle' : 'vehicles'}
+                        Found {sortedCars.length} {sortedCars.length === 1 ? 'vehicle' : 'vehicles'} (sorted by {sortField} {sortOrder})
                     </div>
                 )}
 
@@ -312,7 +364,7 @@ const CarInventory = () => {
                     width: '100%',
                     alignItems: 'stretch'
                 }}>
-                    {cars.map((lot, i) => {
+                    {sortedCars.map((lot, i) => {
                         // normalize fields from sample
                         const lotNumber = lot.ln || lot.lotNumber || lot.id || `${i}`;
                         const make = lot.mkn || lot.make || lot.manufacturer || '';
